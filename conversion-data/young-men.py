@@ -1,6 +1,6 @@
 ## All dictionaries are in the form {Measurement in inches : Constant value}
 import decimal
-from src.math_methods import float_range
+from src.main.math_methods import float_range, interpolate, interpolater, min_values, max_values
 
 ### CONSTANTS ###
 
@@ -17,7 +17,8 @@ ABDOMEN_MEASURE = list(float_range(21, 42.25, 0.25))
 FOREARM_MEASURE = list(float_range(7, 22.25, 0.25))
 
 ### DICTIONARY {MEASURE:CONSTANT}
-UPPER_ARM = zip(UPPER_ARM_MEASURE, UPPER_ARM_CONSTANTS)
+UPPER_ARM = dict(zip(UPPER_ARM_MEASURE, UPPER_ARM_CONSTANTS))
 ABDOMEN = zip(ABDOMEN_MEASURE, ABDOMEN_CONSTANTS)
 FOREARM = zip(FOREARM_MEASURE, FOREARM_CONSTANTS)
+
 
