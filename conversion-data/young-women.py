@@ -1,5 +1,5 @@
 import decimal
-from src.math_methods import float_range
+from src.main.math_methods import float_range
 
 ### CONSTANTS ###
 
