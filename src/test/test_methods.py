@@ -3,8 +3,7 @@ import numpy as np
 
 from sklearn.linear_model import LinearRegression
 from unittest.mock import Mock, patch
-from src.main.math_methods import float_range, axes_data, linear_regression_model
-
+from src.main.math_methods import *
 class TestMathMethods(unittest.TestCase):
 
     def test_float_range(self):
@@ -33,6 +32,17 @@ class TestMathMethods(unittest.TestCase):
         #Assert
         self.assertIsInstance(expected, actual)
 
+    def test_model_y_intercept(self):
+        # Arrange
+        x = axes_data([1,2,3,4,5]).reshape((-1,1))
+        y = axes_data([1,2,3,4,5])
+        model = linear_regression_model(x, y)
+        expected = 0
+        # Act 
+        actual = int(model_y_intercept(model))
+        ## SHOULD REALLY TEST THAT X VALUE OF INTERCEPT EQUALS 0.
+        # Assert
+        self.assertEqual(expected, actual)
 
 if __name__ == "__main__":
     unittest.main()

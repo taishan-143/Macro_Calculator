@@ -17,5 +17,7 @@ def axes_data(list_of_data):
 def linear_regression_model(x_data, y_data):
   return LinearRegression().fit(x_data, y_data)
 
+def model_y_intercept(linear_regression_model):
+  return linear_regression_model.intercept_ 
 
 
