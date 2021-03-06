@@ -1,5 +1,5 @@
 import decimal
-from src.math_methods import float_range
+from src.main.math_methods import float_range
 
 ### CONSTANTS ###
 
@@ -16,8 +16,8 @@ THIGH_MEASURE = list(float_range(14, 34.25, 0.25))
 FOREARM_MEASURE = list(float_range(10, 22.25, 0.25))
 
 ### DICTIONARY {MEASURE:CONSTANT}
-ABDOMEN = dict(zip(ABDOMEN_MEASURE, ABDOMEN_CONSTANTS))
+ABDOMEN = zip(ABDOMEN_MEASURE, ABDOMEN_CONSTANTS)
 THIGH = zip(THIGH_MEASURE, THIGH_CONSTANTS)
 FOREARM = zip(FOREARM_MEASURE, FOREARM_CONSTANTS)
 
-print(len(ABDOMEN_CONSTANTS))
+print(ABDOMEN_MEASURE)

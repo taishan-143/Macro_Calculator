@@ -1,5 +1,5 @@
 import decimal
-from src.math_methods import float_range
+from src.main.math_methods import float_range, axes_data, linear_regression_model
 
 ### CONSTANTS ###
 
@@ -19,3 +19,12 @@ FOREARM_MEASURE = list(float_range(7, 18.5, 0.25))
 BUTTOCKS = zip(BUTTOCKS_MEASURE, BUTTOCKS_CONSTANTS)
 ABDOMEN = zip(ABDOMEN_MEASURE, ABDOMEN_CONSTANTS)
 FOREARM = zip(FOREARM_MEASURE, FOREARM_CONSTANTS)
+
+# print(BUTTOCKS_CONSTANTS)
+# print(BUTTOCKS_MEASURE)
+
+
+x = axes_data(BUTTOCKS_MEASURE).reshape((-1,1))
+y = axes_data(BUTTOCKS_CONSTANTS)
+model = linear_regression_model(x, y)
+print(type(model))
