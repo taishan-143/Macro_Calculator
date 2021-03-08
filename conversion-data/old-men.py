@@ -1,5 +1,7 @@
 import decimal
+import numpy as np
 from src.main.math_methods import *
+from sklearn.metrics import mean_squared_error, r2_score
 
 ### CONSTANTS ###
 
@@ -31,6 +33,15 @@ model = linear_regression_model(x, y)
 y_intercept = model_y_intercept(model)
 gradient = model_gradient(model)
 
-model_value = model_response_prediction(model, [[28.30]])
-model_value2 = model_response_prediction2(y_intercept, gradient, 28.30)
-print(model_value2)
+model_value = model_response_prediction(y_intercept, gradient, x)
+print(model_value)
+model_score = model_R_squared(model, x, y)
+print(model_score)
+
+print('\n')
+
+import_model_score = r2_score(y, model_value)
+print(import_model_score)
+rmse = mean_squared_error(y, model_value)
+print(rmse)
+

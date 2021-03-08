@@ -31,3 +31,5 @@ def model_gradient(linear_regression_model):
 def model_response_prediction(model_y_intercept, model_gradient, input_measure):
   return model_y_intercept + (model_gradient * input_measure)
 
+def model_R_squared(linear_regression_model, x_data, y_data):
+  return linear_regression_model.score(x_data, y_data)
