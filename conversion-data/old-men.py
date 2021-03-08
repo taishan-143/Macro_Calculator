@@ -1,5 +1,5 @@
 import decimal
-from src.main.math_methods import float_range, axes_data, linear_regression_model, model_y_intercept
+from src.main.math_methods import *
 
 ### CONSTANTS ###
 
@@ -27,5 +27,10 @@ FOREARM = zip(FOREARM_MEASURE, FOREARM_CONSTANTS)
 x = axes_data(BUTTOCKS_MEASURE).reshape((-1,1))
 y = axes_data(BUTTOCKS_CONSTANTS)
 model = linear_regression_model(x, y)
+
 y_intercept = model_y_intercept(model)
-print(y_intercept)
+gradient = model_gradient(model)
+
+model_value = model_response_prediction(model, [[28.30]])
+model_value2 = model_response_prediction2(y_intercept, gradient, 28.30)
+print(model_value2)
