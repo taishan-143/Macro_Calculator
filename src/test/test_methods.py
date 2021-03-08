@@ -43,6 +43,29 @@ class TestMathMethods(unittest.TestCase):
         ## SHOULD REALLY TEST THAT X VALUE OF INTERCEPT EQUALS 0.
         # Assert
         self.assertEqual(expected, actual)
+    
+    def test_model_gradient(self):
+        # Arrange
+        x = axes_data([1,2,3,4,5]).reshape((-1,1))
+        y = axes_data([1,2,3,4,5])
+        model = linear_regression_model(x, y)
+        expected = 1
+        # Act 
+        actual = int(model_gradient(model))
+        ## SHOULD REALLY TEST THAT X VALUE OF INTERCEPT EQUALS 0.
+        # Assert
+        self.assertEqual(expected, actual)
+
+    def test_model_response_prediction(self):
+        # Arrange
+        x = axes_data([1,2,3,4,5]).reshape((-1,1))
+        y = axes_data([1,2,3,4,5])
+        model = linear_regression_model(x, y)
+        expected = 3
+        # Act
+        actual = model_response_prediction(0, 1, 3)
+        # Assert
+        self.assertEqual(expected, actual)
 
 if __name__ == "__main__":
     unittest.main()
