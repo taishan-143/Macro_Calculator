@@ -35,7 +35,7 @@ def model_R_squared(linear_regression_model, x_data, y_data):
   return linear_regression_model.score(x_data, y_data)
 
 ### summation of the above methods
-def LinearRegressionModel(measures, constants, input_measure):
+def constant_evaluation(measures, constants, input_measure):
   x_data = axes_data(measures).reshape((-1,1))
   y_data = axes_data(constants)
   Model = linear_regression_model(x_data, y_data)
