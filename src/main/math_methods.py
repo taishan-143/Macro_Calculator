@@ -33,3 +33,12 @@ def model_response_prediction(model_y_intercept, model_gradient, input_measure):
 
 def model_R_squared(linear_regression_model, x_data, y_data):
   return linear_regression_model.score(x_data, y_data)
+
+### summation of the above methods
+def LinearRegressionModel(measures, constants, input_measure):
+  x_data = axes_data(measures).reshape((-1,1))
+  y_data = axes_data(constants)
+  Model = linear_regression_model(x_data, y_data)
+  y_intercept = model_y_intercept(Model)
+  gradient = model_gradient(Model)
+  return model_response_prediction(y_intercept, gradient, input_measure)
