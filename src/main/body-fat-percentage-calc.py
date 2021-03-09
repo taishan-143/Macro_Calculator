@@ -1,5 +1,5 @@
-import src.main.math_methods
-import conversion_data
+from src.main.math_methods import *
+from conversion_data import *
 
 ### Calc logic placed here
 # while loop to keep running
@@ -27,7 +27,7 @@ if sex[0] == "m":
         abdomen = input("Input the measure your abdomen (inches): ")
         forearm = input("Input the measure your forearm (inches): ")
         # linear regression function here
-        UPPER_ARM_CONSTANT = LinearRegressionModel(conversion_data.young_men.UPPER_ARM_MEASURE, conversion_data.young_men.UPPER_ARM_CONSTANTS, upper_arm)
+        UPPER_ARM_CONSTANT = pass # fix problem here!
         print(UPPER_ARM_CONSTANT)
     else: # old 
         buttocks = input("Input the measure your buttocks (inches): ")
