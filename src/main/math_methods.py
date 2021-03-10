@@ -25,7 +25,7 @@ def model_y_intercept(linear_regression_model):
 
 # calculates the gradient of the graph 
 def model_gradient(linear_regression_model):
-  return linear_regression_model.coef_ 
+  return linear_regression_model.coef_[0] 
 
 # returns the response for a given regressor i.e. y = mx + c
 def model_response_prediction(model_y_intercept, model_gradient, input_measure):
@@ -42,3 +42,14 @@ def constant_evaluation(measures, constants, input_measure):
   y_intercept = model_y_intercept(Model)
   gradient = model_gradient(Model)
   return model_response_prediction(y_intercept, gradient, input_measure)
+
+def body_fat_percentage(age, sex, constant_A, constant_B, constant_C):
+  if sex[0] == 'm':
+    if age < 30:
+      return constant_A + constant_B - constant_C - 10.2
+    else:
+      return constant_A + constant_B - constant_C - 15
+  elif sex[0] == 'f':
+      return constant_A + constant_B - constant_C - 19.6
+  else:
+    raise KeyError
