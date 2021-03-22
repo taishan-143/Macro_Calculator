@@ -18,14 +18,8 @@ age = int(input("Enter your age: "))
 # input sex
 sex = input("Are you male or female?: ")
 
-## check against data to determine correct measurements to take
-# ask for required measurements e.g:
-# - input buttocks
-# - input abdomen
-# - input forearm 
-
 ### be more specific with measurement guides!
-if sex[0] == "m":
+if sex[0].lower() == "m":
     if age < 30: # young
         upper_arm = float(input("Input the measure your upper arm (inches): "))
         abdomen = float(input("Input the measure your abdomen (inches): "))
@@ -48,7 +42,7 @@ if sex[0] == "m":
         # evaluate body fat percentage 
         BFP = body_fat_percentage(age, sex, buttocks_constant, abdomen_constant, forearm_constant)
         print(f"Your body fat percentage is {BFP:.2f}%.")
-elif sex[0] == "f":
+elif sex[0].lower() == "f":
     if age < 30: # young 
         abdomen = float(input("Input the measure your abdomen (inches): "))
         thigh = float(input("Input the measure your thigh (inches): "))
