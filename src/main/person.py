@@ -94,14 +94,6 @@ class Person:
 
 
 
-person = Person()
-u = person.input_name()
-v = person.input_age()
-w = person.input_sex()
-x = person.input_height()
-y = person.input_weight()
-print(u, v, w, x, y)
-
 
 
 
