@@ -17,15 +17,6 @@ def male_REE(weight, height, age):
 def female_REE(weight, height, age):
     return (10 * weight) + (6.25 * height) - (5 * age) - 161
 
-# input weight
-weight = int(input("Please insert your weight to the nearest kg: "))
-# input height 
-height = float(input("Please insert your height in cm: "))
-# input age
-age = int(input("How old are you?: "))
-# input sex
-sex = input("Are you male or female?: ")
-
 def calculate_REE(sex):
     if sex[0].lower() == 'm':
         male_REE(weight, height, age)
@@ -36,25 +27,31 @@ def calculate_REE(sex):
         raise KeyError
 
 def determine_TDEE_constant(activity):
+    # Condition to hold the loop open
     not_determined_constant = True 
     while not_determined_constant:
-        activity_measure = int(input(activity))
-        if activity_measure == 1:
-            return 1.2
-            not_determined_constant = False
-        elif activity_measure == 2:
-            return 1.375
-            not_determined_constant = False
-        elif activity_measure == 3: 
-            return 1.55
-            not_determined_constant = False
-        elif activity_measure == 4:
-            return 1.725
-            not_determined_constant = False
-        elif activity_measure < 0 and activity_measure > 4:
-            print("Sorry I dont understand, choose between 1 and 4.")
-            not_determined_constant = True 
-        else:
+        try:
+            # Get user input for TDEE constant
+            activity_measure = int(input(activity))
+            # return the correct constant 
+            if activity_measure == 1:
+                return 1.2
+                not_determined_constant = False
+            elif activity_measure == 2:
+                return 1.375
+                not_determined_constant = False
+            elif activity_measure == 3: 
+                return 1.55
+                not_determined_constant = False
+            elif activity_measure == 4:
+                return 1.725
+                not_determined_constant = False
+            # check a correct value has been input
+            else: 
+                print("Sorry I dont understand, choose between 1 and 4.")
+                not_determined_constant = True 
+        # Check an integer is being input. 
+        except ValueError as v:
             print("Sorry, you didn't enter a number between 1 and 4.")
             not_determined_constant = True
 

@@ -15,7 +15,7 @@ class Person:
         self.forename = full_name.split()[0].capitalize()
         self.surname = full_name.split()[1].capitalize()
         # Return a tuple of the forename and surname. 
-        return (self.forename, self.surname)
+        return self.forename, self.surname
     
     def input_age(self):
         # Condition to hold the loop in place 
@@ -33,7 +33,7 @@ class Person:
                     not_acquired_age = False
                     return self.age 
             # Check an integer was passed in for the age
-            except ValueError as e:
+            except ValueError as v:
                 print("You entered an invalid age, try again.")
                 not_acquired_age = True 
     
@@ -53,19 +53,54 @@ class Person:
                 not_acquired_sex = True
 
     def input_weight(self):
-        try:
-            self.weight = int(input("Enter your weight in kg: "))
+        # Condition to hold the loop open 
+        not_acquired_weight = True
+        while not_acquired_weight:
+            try:
+                # Acquire weight 
+                self.weight = float(input("Enter your weight in kg: "))
+                # Check the weight isn't less than zero -> impossible.
+                if self.weight < 0:
+                    print("You can't have a negative weight, can you?")
+                    not_acquired_weight = True
+                else:
+                    # Exit loop and return weight
+                    not_acquired_weight = True
+                    return self.weight
+            # check a float was passed for the weight 
+            except ValueError as v:
+                print("You have entered an invalid weight, try again.")
+                not_acquired_weight = True
 
     def input_height(self):
-        try:
-            self.height = int(input("Enter your height in cm: "))
-
-
-
+        # Condition to hold the loop open 
+        not_acquired_height = True
+        while not_acquired_height:
+            try:
+                # Acquire weight 
+                self.height = float(input("Enter your height in cm: "))
+                # Check the weight isn't less than zero -> impossible.
+                if self.height < 0:
+                    print("You can't have a negative height, can you?")
+                    not_acquired_height = True
+                else:
+                    # Exit loop and return weight
+                    not_acquired_height = True
+                    return self.height
+            # check a float was passed for the height
+            except ValueError as v:
+                print("You have entered an invalid height, try again.")
+                not_acquired_height = True
 
 
 
 person = Person()
+u = person.input_name()
+v = person.input_age()
+w = person.input_sex()
+x = person.input_height()
+y = person.input_weight()
+print(u, v, w, x, y)
 
 
 
