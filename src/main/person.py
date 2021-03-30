@@ -1,3 +1,4 @@
+### used to create a person with personal information, to be persisted to a tempory csv.
 
 class Person:
     def __init__(self):
@@ -93,7 +94,55 @@ class Person:
                 not_acquired_height = True
 
 
+def personal_info_menu():
+    print("""
+    +======================+
+    | Personal Information |
+    +======================+
+    | [1] Name             |
+    | [2] Age              |
+    | [3] Sex              |
+    | [4] Weight           |
+    | [5] Height           |
+    +======================+
+        
+    """)
 
+def personal_information():
+    # instantiate person class
+    while True:
+        person = Person()
+
+        personal_info_menu()
+        view_personal_details = True
+        while view_personal_details:
+            try:
+                option = int(input("Choose some information to update, 1-6:"))
+
+                if option == 1:
+                    person.input_name()
+                    view_personal_details = False
+                elif option == 2:
+                    person.input_age()
+                    view_personal_details = False
+                elif option == 3:
+                    person.input_sex()
+                    view_personal_details = False
+                elif option == 4:
+                    person.input_weight()
+                    view_personal_details = False
+                elif option == 5:
+                    person.input_height()
+                    view_personal_details = False
+                else:
+                    print("\nSorry I dont understand.\nPlease choose between 1 and 6.")
+            except ValueError as v:
+                print("Sorry, you didn't select a number.")
+
+        if not view_another_page():
+            print("Thanks, now calculate those macro's!")
+            clear()
+            break 
 
 
 
