@@ -1,6 +1,8 @@
 import time
 import os
 
+from src.main.person import *
+
 # Calculate body fat percentage => DONE
 # Calculate maintenance calories
 #   - weight, height, age input etc
@@ -40,19 +42,22 @@ def menu():
     print(""" 
     Welcome to Macronumeracy! 
 
+    Start by filling out your personal information.
+
     +==========================+
     |        MAIN MENU         |
     +==========================+
-    | [1] Body fat percentage  |
-    | [2] Maintenance calories |
+    | [0] Personal Information |
+    | [1] Body Fat Percentage  |
+    | [2] Maintenance Calories |
     +==========================+
     
     """)
 
-def view_another_page():  # The user decides if they wish to view the menu
+def view_another_page(message):  # The user decides if they wish to view the menu
 
     while True:
-        choice = input("\nWould you like to view the menu again, Y or N?: ")
+        choice = input(message)
         if choice == '' or choice == ' ':
             continue
         elif choice[0].lower() == 'y':
@@ -65,6 +70,43 @@ def view_another_page():  # The user decides if they wish to view the menu
         else:
             print("\nI dont understand.") 
 
+def personal_information():
+    # instantiate person class
+    while True:
+        person = Person()
+
+        personal_info_menu()
+        view_personal_details = True
+        while view_personal_details:
+            try:
+                option = int(input("Choose some information to update, 1-6: "))
+
+                if option == 1:
+                    person.input_name()
+                    view_personal_details = False
+                elif option == 2:
+                    person.input_age()
+                    view_personal_details = False
+                elif option == 3:
+                    person.input_sex()
+                    view_personal_details = False
+                elif option == 4:
+                    person.input_weight()
+                    view_personal_details = False
+                elif option == 5:
+                    person.input_height()
+                    view_personal_details = False
+                else:
+                    print("\nSorry I dont understand.\nPlease choose between 1 and 6.")
+            except ValueError as v:
+                print("Sorry, you didn't select a number.")
+
+        if not view_another_page("Would you like to enter more details, Y or N?: "):
+            print("Thanks, now calculate those macro's!")
+            time.sleep(1)
+            clear()
+            break 
+
 
 def start():
     app_initialisation("src/main/titlepage.txt")
@@ -76,9 +118,12 @@ def start():
         view_menu = True
         while view_menu:
             try:
-                option = int(input("Choose your selection here, 1 or 2?: "))
+                option = int(input("Choose your selection here: "))
 
-                if option == 1:
+                if option == 0:
+                    personal_information()
+                    view_menu = False
+                elif option == 1:
                     print("Fart")
                     view_menu = False
                 elif option == 2:
@@ -89,7 +134,7 @@ def start():
             except ValueError as v:
                 print("\nThat's not a number, try again")
 
-        if not view_another_page():
+        if not view_another_page("\nWould you like to view the main menu again, Y or N?: "):
             print("Stay healthy and motivated!")
             time.sleep(2)
             clear()
