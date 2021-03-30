@@ -47,7 +47,6 @@ def menu():
     | [2] Maintenance calories |
     +==========================+
     
-    Choose an option:
     """)
 
 def view_another_page():  # The user decides if they wish to view the menu
@@ -74,4 +73,27 @@ def start():
 
         menu()
 
-        
+        view_menu = True
+        while view_menu:
+            try:
+                option = int(input("Choose your selection here, 1 or 2?: "))
+
+                if option == 1:
+                    print("Fart")
+                    view_menu = False
+                elif option == 2:
+                    print("Tart")
+                    view_menu = False
+                else:
+                    print("\nSorry I dont understand.\nPlease choose either 1 or 2.")
+            except ValueError as v:
+                print("\nThat's not a number, try again")
+
+        if not view_another_page():
+            print("Stay healthy and motivated!")
+            time.sleep(2)
+            clear()
+            break 
+
+
+start()
