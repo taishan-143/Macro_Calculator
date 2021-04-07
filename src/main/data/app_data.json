@@ -1,0 +1,20 @@
+{
+  "Taishan Rowe": {
+    "Age": 25,
+    "Sex": "male",
+    "Weight": 104.0,
+    "Height": 189.0
+  },
+  "Jack Palmer": {
+    "Age": 25,
+    "Sex": "male",
+    "Weight": 90.0,
+    "Height": 180.0
+  },
+  "Jimothy Lacoste": {
+    "Age": 28,
+    "Sex": "male",
+    "Weight": 90.0,
+    "Height": 175.0
+  }
+}
