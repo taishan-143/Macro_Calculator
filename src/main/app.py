@@ -1,7 +1,8 @@
 import time
 import os
 
-from src.main.person import *
+from src.main.classes.person import *
+from src.main.classes.persistence import *
 
 # Calculate body fat percentage => DONE
 # Calculate maintenance calories
@@ -32,6 +33,7 @@ def app_initialisation(title_path):
     print("\nCreated by Taishan Rowe :)")
     time.sleep(2)
     clear()
+
 
 
 def clear():
@@ -70,38 +72,27 @@ def view_another_page(message):  # The user decides if they wish to view the men
         else:
             print("\nI dont understand.") 
 
-def personal_information():
+def personal_information(database):
     # instantiate person class
     while True:
         person = Person()
+        persistence = Persistence()
 
         personal_info_menu()
-        view_personal_details = True
-        while view_personal_details:
-            try:
-                option = int(input("Choose some information to update, 1-6: "))
 
-                if option == 1:
-                    person.input_name()
-                    view_personal_details = False
-                elif option == 2:
-                    person.input_age()
-                    view_personal_details = False
-                elif option == 3:
-                    person.input_sex()
-                    view_personal_details = False
-                elif option == 4:
-                    person.input_weight()
-                    view_personal_details = False
-                elif option == 5:
-                    person.input_height()
-                    view_personal_details = False
-                else:
-                    print("\nSorry I dont understand.\nPlease choose between 1 and 6.")
-            except ValueError as v:
-                print("Sorry, you didn't select a number.")
+        name = person.input_name()
+        database[name] = {}
 
-        if not view_another_page("Would you like to enter more details, Y or N?: "):
+        age = person.input_age()
+        persistence.save_data(database, "src/main/data/app_data.json", name, "Age", age)
+        sex = person.input_sex()
+        persistence.save_data(database, "src/main/data/app_data.json", name, "Sex", sex)
+        weight = person.input_weight()
+        persistence.save_data(database, "src/main/data/app_data.json", name, "Weight", weight)
+        height = person.input_height()
+        persistence.save_data(database, "src/main/data/app_data.json", name, "Height", height)
+         
+        if not view_another_page("\nWould you like to enter more details, Y or N?: "):
             print("Thanks, now calculate those macro's!")
             time.sleep(1)
             clear()
@@ -109,11 +100,15 @@ def personal_information():
 
 
 def start():
-    app_initialisation("src/main/titlepage.txt")
+    app_initialisation("src/main/extras/titlepage.txt")
     while True:
         clear()
 
         menu()
+
+        persistence = Persistence()
+        database = persistence.load_data("src/main/data/app_data.json")
+        print(database)
 
         view_menu = True
         while view_menu:
@@ -121,8 +116,9 @@ def start():
                 option = int(input("Choose your selection here: "))
 
                 if option == 0:
-                    personal_information()
+                    personal_information(database)
                     view_menu = False
+                    # stick menu in without asking to view it here 
                 elif option == 1:
                     print("Fart")
                     view_menu = False
