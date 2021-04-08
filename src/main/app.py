@@ -3,18 +3,12 @@ import os
 
 from src.main.classes.person import *
 from src.main.classes.persistence import *
+from src.main.methods.body_fat_percentage_calc import body_fat_percentage_calculator
+from src.main.methods.other_methods import *
 
-# Calculate body fat percentage => DONE
-# Calculate maintenance calories
-#   - weight, height, age input etc
-#   - dependant on sex
-# Calculate required daily macros 
-#   - dependant on weight loss or gain
-
-
-def title_page(title):
-    with open(title, 'r') as starting_page:
-        contents = starting_page.read()
+def read_file(filepath):
+    with open(filepath, 'r') as data:
+        contents = data.read()
         print(contents)
     
 def app_initialisation(title_path):
@@ -28,7 +22,7 @@ def app_initialisation(title_path):
     print("initialising app . . .")
     time.sleep(1)
     clear()
-    title_page(title_path)
+    read_file(title_path)
     time.sleep(2)
     print("\nCreated by Taishan Rowe :)")
     time.sleep(2)
@@ -52,6 +46,7 @@ def menu():
     | [0] Personal Information |
     | [1] Body Fat Percentage  |
     | [2] Maintenance Calories |
+    | [3] Exit                 |
     +==========================+
     
     """)
@@ -108,7 +103,6 @@ def start():
 
         persistence = Persistence()
         database = persistence.load_data("src/main/data/app_data.json")
-        print(database)
 
         view_menu = True
         while view_menu:
@@ -120,11 +114,18 @@ def start():
                     view_menu = False
                     # stick menu in without asking to view it here 
                 elif option == 1:
-                    print("Fart")
+                    read_file("src/main/extras/body_fat_percentage_instructions.txt")
+                    # insert method which allows the user to choose a name and selects it's data
+                    # run body_fat_percent_calc on user
                     view_menu = False
                 elif option == 2:
-                    print("Tart")
+                    # insert method which chooses a name and calculates maintenance calories
                     view_menu = False
+                elif option == 3:
+                    clear()
+                    print("Stay healthy and motivated!")
+                    time.sleep(1.5)
+                    exit()
                 else:
                     print("\nSorry I dont understand.\nPlease choose either 1 or 2.")
             except ValueError as v:

@@ -1,6 +1,6 @@
 import decimal
 import numpy as np
-from src.main.math_methods import *
+from src.main.methods.math_methods import *
 from sklearn.metrics import mean_squared_error, r2_score
 
 ### CONSTANTS ###
