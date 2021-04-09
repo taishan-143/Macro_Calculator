@@ -17,11 +17,11 @@ def male_REE(weight, height, age):
 def female_REE(weight, height, age):
     return (10 * weight) + (6.25 * height) - (5 * age) - 161
 
-def calculate_REE(sex):
+def calculate_REE(sex, weight, height, age):
     if sex[0].lower() == 'm':
-        male_REE(weight, height, age)
+        return male_REE(weight, height, age)
     elif sex[0].lower() == 'f':
-        female_REE(weight, height, age)
+        return female_REE(weight, height, age)
     else:
         # elaborate on error checks!
         raise KeyError
@@ -57,4 +57,18 @@ def determine_TDEE_constant(activity):
 
 def calculate_TDEE(TDEE_constant, REE):
     return TDEE_constant * REE
+
+
+def maintenance_calories(user_data):
+
+    age = user_data["Age"]
+    sex = user_data["Sex"]
+    weight = user_data["Weight"]
+    height = user_data["Height"]
+
+    REE = calculate_REE(sex, weight, height, age)
+    activity_constant = determine_TDEE_constant(activity)
+    TDEE = calculate_TDEE(activity_constant, REE)
+    return f"Your maintenance calories are: {TDEE:.2f} calories"
+
 

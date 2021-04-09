@@ -12,11 +12,13 @@ from conversion_data.old_women import *
 ### Be more specific with measurement guides! 
 # Print a message to the user if this calculator is selected.
 
-def body_fat_percentage_calculator(sex, age):
+def body_fat_percentage_calculator(user_data):
 
+    sex = user_data["Sex"]
+    age = user_data["Age"]
     if sex[0].lower() == "m":
         if age < 30: # young
-            upper_arm = float(input("Input the measure your upper arm (inches): "))
+            upper_arm = float(input("\nInput the measure your upper arm (inches): "))
             abdomen = float(input("Input the measure your abdomen (inches): "))
             forearm = float(input("Input the measure your forearm (inches): "))
             # linear regression here
@@ -25,9 +27,9 @@ def body_fat_percentage_calculator(sex, age):
             forearm_constant = constant_evaluation(YOUNG_FOREARM_MEASURE, YOUNG_FOREARM_CONSTANTS, forearm)
             # evaluate body fat percentage 
             BFP = body_fat_percentage(age, sex, upper_arm_constant, abdomen_constant, forearm_constant)
-            return f"Your body fat percentage is {BFP:.2f}%."
+            return f"\nYour body fat percentage is {BFP:.2f}%."
         else: # old 
-            buttocks = float(input("Input the measure your buttocks (inches): "))
+            buttocks = float(input("\nInput the measure your buttocks (inches): "))
             abdomen = float(input("Input the measure of your abdomen (inches): "))
             forearm = float(input("Input the measure of your forearm (inches): "))
             # linear regression here
@@ -36,10 +38,10 @@ def body_fat_percentage_calculator(sex, age):
             forearm_constant = constant_evaluation(OLD_FOREARM_MEASURE, OLD_FOREARM_CONSTANTS, forearm)
             # evaluate body fat percentage 
             BFP = body_fat_percentage(age, sex, buttocks_constant, abdomen_constant, forearm_constant)
-            return f"Your body fat percentage is {BFP:.2f}%."
+            return f"\nYour body fat percentage is {BFP:.2f}%."
     elif sex[0].lower() == "f":
         if age < 30: # young 
-            abdomen = float(input("Input the measure your abdomen (inches): "))
+            abdomen = float(input("\nInput the measure your abdomen (inches): "))
             thigh = float(input("Input the measure your thigh (inches): "))
             forearm = float(input("Input the measure your forearm (inches): "))
             # linear regression here
@@ -48,9 +50,9 @@ def body_fat_percentage_calculator(sex, age):
             forearm_constant = constant_evaluation(FOREARM_MEASURE_YW, FOREARM_CONSTANTS_YW, forearm)
             # evaluate body fat percentage 
             BFP = body_fat_percentage(age, sex, abdomen_constant, thigh_constant, forearm_constant)
-            return f"Your body fat percentage is {BFP:.2f}%."
+            return f"\nYour body fat percentage is {BFP:.2f}%."
         else: # old
-            abdomen = float(input("Input the measure your abdomen (inches): "))
+            abdomen = float(input("\nInput the measure your abdomen (inches): "))
             thigh = float(input("Input the measure your thigh (inches): "))
             forearm = float(input("Input the measure your forearm (inches): "))
             # linear regression here
@@ -59,7 +61,7 @@ def body_fat_percentage_calculator(sex, age):
             forearm_constant = constant_evaluation(FOREARM_MEASURE_OW, FOREARM_CONSTANTS_OW, forearm)
             # evaluate body fat percentage 
             BFP = body_fat_percentage(age, sex, abdomen_constant, thigh_constant, forearm_constant)
-            return f"Your body fat percentage is {BFP:.2f}%."
+            return f"\nYour body fat percentage is {BFP:.2f}%."
     else:
         raise KeyError
 

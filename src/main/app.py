@@ -4,12 +4,9 @@ import os
 from src.main.classes.person import *
 from src.main.classes.persistence import *
 from src.main.methods.body_fat_percentage_calc import body_fat_percentage_calculator
-from src.main.methods.other_methods import *
+import src.main.methods.other_methods as other_methods
+from src.main.methods.maintenance_calories import maintenance_calories
 
-def read_file(filepath):
-    with open(filepath, 'r') as data:
-        contents = data.read()
-        print(contents)
     
 def app_initialisation(title_path):
     clear()
@@ -22,12 +19,11 @@ def app_initialisation(title_path):
     print("initialising app . . .")
     time.sleep(1)
     clear()
-    read_file(title_path)
+    other_methods.read_file(title_path)
     time.sleep(2)
     print("\nCreated by Taishan Rowe :)")
     time.sleep(2)
     clear()
-
 
 
 def clear():
@@ -100,9 +96,12 @@ def start():
         clear()
 
         menu()
-
+        
         persistence = Persistence()
         database = persistence.load_data("src/main/data/app_data.json")
+
+        # create a register of names
+        names = other_methods.create_register(database)
 
         view_menu = True
         while view_menu:
@@ -110,16 +109,30 @@ def start():
                 option = int(input("Choose your selection here: "))
 
                 if option == 0:
+                    clear()
                     personal_information(database)
                     view_menu = False
                     # stick menu in without asking to view it here 
                 elif option == 1:
-                    read_file("src/main/extras/body_fat_percentage_instructions.txt")
-                    # insert method which allows the user to choose a name and selects it's data
-                    # run body_fat_percent_calc on user
+                    clear()
+                    other_methods.read_file("src/main/extras/body_fat_percentage_instructions.txt")
+                    # grab a specific user from the list of names
+                    specific_person = other_methods.choose_user(names)
+                    # return that users data
+                    specific_user_data = other_methods.user_data(database, specific_person)
+                    # run body_fat_percent_calc on  user
+                    body_fat_percentage = body_fat_percentage_calculator(specific_user_data)
+                    print(body_fat_percentage)
                     view_menu = False
                 elif option == 2:
-                    # insert method which chooses a name and calculates maintenance calories
+                    clear()
+                    # grab a specific user from the list of names
+                    specific_person = other_methods.choose_user(names)
+                    # return that users data
+                    specific_user_data = other_methods.user_data(database, specific_person)
+                    # calculate that users maintenance calories
+                    maintenance_cals = maintenance_calories(specific_user_data)
+                    print(maintenance_cals)
                     view_menu = False
                 elif option == 3:
                     clear()

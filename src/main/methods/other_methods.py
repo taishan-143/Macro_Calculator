@@ -1,11 +1,11 @@
 # Create function to read through json file, grab names and append to a list -> potentially edit json file to support dictionary indexing.
-def create_register(filepath):
-    return list(filepath.keys())
+def create_register(database):
+    return list(database.keys())
     # returns '[name1, name2, name3]'
 
 # Create function which takes a name, and returns the appropriate data 
-def user_data(filepath, name):
-    return filepath[name]
+def user_data(database, name):
+    return database[name]
     # returns '{Age: value, Sex: value, Weight: value, Height: value}'
 
 
@@ -31,17 +31,30 @@ def table_width(header, data):
 
 # create function to display data in a table 
 def table(header, data):
-    separator = '+' + '='*table_width(header, data) + '+'
+    separator = '+' + '='*(table_width(header, data) + 4) + '+'
     print('\n' + separator)
-    print(f'| {header}' + ' '*(table_width(header, data)-len(header)-1) + '|')
+    print(f'| {header}' + ' '*(table_width(header, data)-len(header) + 3) + '|')
     print(separator)
-    if type(data) == dict:
-        for key, value in data.items():          
-            print('|' + ' ' + f"[{str(key)}]" + ' ' + str(value) + ' '*(table_width(header, data)-len(str(key))-len(str(value))-4) + '|')
-    else:
-        for item in data:
-            print('|' + ' ' + item + ' '*(table_width(header, data)-len(item)-1) + '|')
+    for index, item in enumerate(data, 1):
+        if item == '':
+            continue
+        else:
+            print('|' + ' ' + '[' + str(index) + ']' + ' ' + item + ' '*(table_width(header, data) - len(item) - len(str(index))) + '|')
     print(separator)
 
+def read_file(filepath):
+    with open(filepath, 'r') as data:
+        contents = data.read()
+        print(contents)
 
+def choose_user(list_of_names):
+    # show names in a table
+    table("USERS", list_of_names)
+    # take input from the user
+    option = int(input(f"Which person would you like to select? (1 - {len(list_of_names)}): "))
+    # from that input, return the desired name
+    for index, name in enumerate(list_of_names, 1):
+        if option == index:
+            return name 
 
+    
