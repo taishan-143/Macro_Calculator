@@ -1,7 +1,6 @@
 import decimal
-import numpy as np
-from src.main.methods.math_methods import *
-from sklearn.metrics import mean_squared_error, r2_score
+from src.main.functions.math_methods import float_range
+
 
 ### CONSTANTS ###
 
@@ -24,24 +23,5 @@ FOREARM = dict(zip(OLD_FOREARM_MEASURE, OLD_FOREARM_CONSTANTS))
 
 
 
-# x = axes_data(BUTTOCKS_MEASURE).reshape((-1,1))
-# y = axes_data(BUTTOCKS_CONSTANTS)
-# model = linear_regression_model(x, y)
 
-# y_intercept = model_y_intercept(model)
-# print(type(y_intercept))
-# gradient = model_gradient(model)
-# print(type(gradient))
-
-# model_value = model_response_prediction(y_intercept, gradient, x)
-# print(type(model_value))
-# model_score = model_R_squared(model, x, y)
-# print(type(model_score))
-
-# print('\n')
-
-# import_model_score = r2_score(y, model_value)
-# print(type(import_model_score))
-# rmse = mean_squared_error(y, model_value)
-# print(type(rmse))
 

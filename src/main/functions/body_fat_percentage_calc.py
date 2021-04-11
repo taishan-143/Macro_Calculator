@@ -1,4 +1,4 @@
-from src.main.methods.math_methods import *
+from src.main.functions.math_methods import *
 
 from conversion_data.young_men import *
 from conversion_data.old_men import *
