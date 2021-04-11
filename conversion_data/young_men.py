@@ -1,6 +1,6 @@
-## All dictionaries are in the form {Measurement in inches : Constant value}
+
 import decimal
-from src.main.methods.math_methods import *
+from src.main.functions.math_methods import float_range
 
 ### CONSTANTS ###
 
