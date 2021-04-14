@@ -53,3 +53,10 @@ def body_fat_percentage(age, sex, constant_A, constant_B, constant_C):
       return constant_A + constant_B - constant_C - 19.6
   else:
     raise KeyError
+
+
+def male_body_fat_percentage(neck, abdomen, height):
+  return (86.010 * np.log10(abdomen - neck)) - (70.041 * np.log10(height)) + 36.76
+
+def female_body_fat_percentage(neeck, waist, hips, height):
+  return (163.205 * np.log10(waist + hips - neck)) - (97.684 * np.log10(height)) - 78.387
