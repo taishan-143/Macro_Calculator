@@ -4,6 +4,7 @@ from src.main.classes.persistence import *
 import src.main.functions.methods as methods
 from src.main.functions.body_fat_percentage_calc import body_fat_percentage_new_calc
 from src.main.functions.maintenance_calories import maintenance_calories
+from src.main.functions.macronutrients import new_caloric_intake, macronutrient_ratios
 
 
 
@@ -14,15 +15,16 @@ def menu():
 
     Start by filling out your personal information.
 
-    +==========================+
-    |        MAIN MENU         |
-    +==========================+
-    | [0] Personal Information |
-    | [1] Body Fat Percentage  |
-    | [2] Maintenance Calories |
-    | [3] Macronutrients       |
-    | [4] Exit                 |
-    +==========================+
+    +===========================+
+    |        MAIN MENU          |
+    +===========================+
+    | [0] Personal Information  |
+    | [1] Body Fat Percentage   |
+    | [2] Maintenance Calories  |
+    | [3] Macronutrients        |    
+    | [4] View User Information |
+    | [5] Exit                  |
+    +===========================+
     
     """)
 
@@ -58,7 +60,8 @@ def start():
                     specific_user_data = methods.user_data(database, specific_person)
                     # run body_fat_percent_calc on  user
                     body_fat_percentage = body_fat_percentage_new_calc(specific_user_data)
-                    print(body_fat_percentage)
+                    print(f"\nYour body fat percentage is {body_fat_percentage:.2f}%")
+                    persistence.save_data(database, "src/main/data/app_data.json", specific_person, "Body Fat Percentage", body_fat_percentage)
                     view_menu = False
                 elif option == 2:
                     methods.clear()
@@ -68,11 +71,29 @@ def start():
                     specific_user_data = methods.user_data(database, specific_person)
                     # calculate that users maintenance calories
                     maintenance_cals = maintenance_calories(specific_user_data)
-                    print(maintenance_cals)
+                    print(f"Your maintenance calories are: {maintenance_cals:.2f} calories")
+                    persistence.save_data(database, "src/main/data/app_data.json", specific_person, "Maintenance Calories", maintenance_cals)
                     view_menu = False
                 elif option == 3:
-                    pass
+                    methods.clear()
+                    # grab a user
+                    specific_person = methods.choose_user(names)
+                    # get their maintenance calories
+                    maintenance_cals = database[specific_person]["Maintenance Calories"]
+                    # calculate their macros
+                    preference = input("Are you bulking, or cutting?: ")
+                    NCI = new_caloric_intake(preference, maintenance_cals) # MAKE MAINTENANCE CALS AND BODY FAT GLOBAL VARIABLES. 
+                    preferred_macro_ratios = macronutrient_ratios(NCI)
+                    print(preferred_macro_ratios)
+                    view_menu = False
                 elif option == 4:
+                    methods.clear()
+                    # grab a user
+                    specific_person = methods.choose_user(names)
+                    # show their data
+                    methods.view_user_information(database, specific_person)
+                    view_menu = False
+                elif option == 5:
                     methods.clear()
                     print("Stay healthy and motivated!")
                     time.sleep(1.5)

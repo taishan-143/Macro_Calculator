@@ -69,6 +69,6 @@ def maintenance_calories(user_data):
     REE = calculate_REE(sex, weight, height, age)
     activity_constant = determine_TDEE_constant(activity)
     TDEE = calculate_TDEE(activity_constant, REE)
-    return f"Your maintenance calories are: {TDEE:.2f} calories"
+    return round(TDEE, 2)
 
 
