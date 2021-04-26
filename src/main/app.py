@@ -2,7 +2,7 @@ import time
 
 from src.main.classes.persistence import *
 import src.main.functions.methods as methods
-from src.main.functions.body_fat_percentage_calc import body_fat_percentage_calculator
+from src.main.functions.body_fat_percentage_calc import body_fat_percentage_new_calc
 from src.main.functions.maintenance_calories import maintenance_calories
 
 
@@ -24,7 +24,6 @@ def menu():
     +==========================+
     
     """)
-
 
 def start():
     methods.app_initialisation("src/main/extras/titlepage.txt")
@@ -57,7 +56,7 @@ def start():
                     # return that users data
                     specific_user_data = methods.user_data(database, specific_person)
                     # run body_fat_percent_calc on  user
-                    body_fat_percentage = body_fat_percentage_calculator(specific_user_data)
+                    body_fat_percentage = body_fat_percentage_new_calc(specific_user_data)
                     print(body_fat_percentage)
                     view_menu = False
                 elif option == 2:
