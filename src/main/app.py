@@ -20,7 +20,8 @@ def menu():
     | [0] Personal Information |
     | [1] Body Fat Percentage  |
     | [2] Maintenance Calories |
-    | [3] Exit                 |
+    | [3] Macronutrients       |
+    | [4] Exit                 |
     +==========================+
     
     """)
@@ -70,6 +71,8 @@ def start():
                     print(maintenance_cals)
                     view_menu = False
                 elif option == 3:
+                    pass
+                elif option == 4:
                     methods.clear()
                     print("Stay healthy and motivated!")
                     time.sleep(1.5)
