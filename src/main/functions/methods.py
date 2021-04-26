@@ -8,17 +8,17 @@ def clear():
     # clears the screen
     os.system("clear")
 
-# Create function to read through json file, grab names and append to a list -> potentially edit json file to support dictionary indexing.
+# Function to read through json file, grab names and append to a list -> potentially edit json file to support dictionary indexing.
 def create_register(database):
     return list(database.keys())
     # returns '[name1, name2, name3]'
 
-# Create function which takes a name, and returns the appropriate data 
+# Function which takes a name, and returns the appropriate data 
 def user_data(database, name):
     return database[name]
     # returns '{Age: value, Sex: value, Weight: value, Height: value}'
 
-# Create table width function 
+# Table width function 
 def table_width(header, data):
     biggest = len(header)
     if data == []:
@@ -38,7 +38,7 @@ def table_width(header, data):
                 biggest = len(str(value)) + len(str(key))
         return biggest + 5
 
-# create function to display data in a table 
+# Function to display data in a table, data is in a list
 def table(header, data):
     separator = '+' + '='*(table_width(header, data) + 4) + '+'
     print('\n' + separator)
@@ -49,6 +49,19 @@ def table(header, data):
             continue
         else:
             print('|' + ' ' + '[' + str(index) + ']' + ' ' + item + ' '*(table_width(header, data) - len(item) - len(str(index))) + '|')
+    print(separator)
+
+# create function to display personal data in a table, data is in a list
+def data_table(header, data):
+    separator = '+' + '='*(table_width(header, data) + 1) + '+'
+    print('\n' + separator)
+    print(f'| {header}' + ' '*(table_width(header, data)-len(header)) + '|')
+    print(separator)
+    for item in data:
+        if item == '':
+            continue
+        else:
+            print('|' + ' ' + item + ' '*(table_width(header, data) - len(item)) + '|')
     print(separator)
 
 # Read file data
@@ -130,3 +143,23 @@ def app_initialisation(title_path):
     print("\nCreated by Taishan Rowe :)")
     time.sleep(2)
     clear()
+
+# View the users information
+def view_user_information(database, user):
+    age = database[user]["Age"]
+    sex = database[user]["Sex"]
+    weight = database[user]["Weight"]
+    height = database[user]["Height"]
+    body_fat = database[user]["Body Fat Percentage"]
+    maintenance = database[user]["Maintenance Calories"]
+
+    age_line = f"Age: {age} years"
+    sex_line = f"Sex: {sex}"
+    weight_line = f"Weight: {weight}kg"
+    height_line = f"Height: {height}m"
+    body_fat_line = f"Body Fat Percentage: {body_fat}%"
+    maintenance_line = f"Maintenance Calories: {maintenance} calories"
+
+    personal_data = [age_line, sex_line, weight_line, height_line, body_fat_line, maintenance_line]
+    data_table(f"{user}'s Information", personal_data)
+    
