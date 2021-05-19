@@ -1,0 +1,13 @@
+{
+    "name": "Taishan Rowe",
+    "username": "taishan143",
+    "password": "Qwerty123",
+    "data": {
+        "Age": 25,
+        "Sex": "male",
+        "Weight": 104.0,
+        "Height": 189.0,
+        "Body Fat Percentage": 27.37,
+        "Maintenance Calories": 2889.22
+        }
+}
