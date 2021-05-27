@@ -1,6 +1,6 @@
 import unittest
 
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, mock_open
 from src.main.functions.methods import *
 
 class TestMethods(unittest.TestCase):
@@ -64,27 +64,70 @@ class TestMethods(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     # and this one
-    def test_data_table(self):
-        pass
+    # def test_data_table(self):
+    #     pass
         
+    @patch("builtins.open", new_callable=mock_open, read_data="data") # potentially pointless
+    def test_read_file(self, mock_file):
+        assert open("path/to/file").read() == "data"
+        mock_file.assert_called_with("path/to/file")
+        
+    @patch("builtins.input")
+    def test_choose_user(self, mock_input):
+        names = ["Tim", "Tom", "Dom", "Jim"]
+        table("USER's", names)
+        mock_input.return_value = 2
+        expected_name = "Tom"
 
-    def test_read_file(self):
-        pass
+        actual_name = choose_user(names)
 
-    def test_choose_user(self):
-        pass
+        self.assertEqual(expected_name, actual_name)
 
-    def test_view_another_page(self):
-        pass
+    @patch("builtins.input")
+    def test_choose_user__invalid_input(self, mock_input):
+        names = ["Tim", "Tom", "Dom", "Jim"]
+        table("USER's", names)
+        mock_input.return_value = 'w'
+        expected_name = "Tom"
 
-    def test_personal_information(self):
-        pass
+        actual_name = choose_user(names)
 
-    def test_app_initialisation(self):
-        pass
+        self.assertNotEqual(expected_name, actual_name)
 
+    @patch("builtins.input")
+    def test_view_another_page(self, mock_input):
+        message = "Would you like to test again?: "
+        mock_input.return_value = "y"
+        expected_result = 'y'
+
+        actual_result = view_another_page(message)
+
+        self.assertEqual(expected_result, actual_result)
+        
+    @patch("builtins.input")    
+    def test_view_another_page__invalid_input_to_valid(self, mock_input):
+        message = "Would you like to test again?: "
+        mock_input.side_effect = ['a', 'n']
+        expected_result = False
+
+        actual_result = view_another_page(message)
+
+        self.assertEqual(expected_result, actual_result)
+
+    # def test_personal_information(self):
+    #     pass
+
+    # def test_app_initialisation(self):
+    #     pass
+    
     def test_view_user_information(self):
-        pass
+        database = {"Joe Bloggs": {"Age": 21, "Sex": "Male", "Weight": 95, "Height": 180, "Body Fat Percentage": 18, "Maintenance Calories": 2250}}
+        user = "Joe Bloggs"
+        expected = ["Age: 21 years", "Sex: Male", "Weight: 95kg", "Height: 180m", "Body Fat Percentage: 18%", "Maintenance Calories: 2250 calories"]
+
+        actual = view_user_information(database, user)
+
+        self.assertEqual(expected, actual)
 
 if __name__ == "__main__":
     unittest.main()
