@@ -55,7 +55,7 @@ class TestBodyFatPercentageCalc(unittest.TestCase):
         self.assertEqual(expected, actual)
     
     @patch("builtins.input")
-    def test_body_fat_percentage_calc_key_error(self, mock_input):
+    def test_body_fat_percentage_calc__key_error(self, mock_input):
     
         mock_body_fat = Mock(body_fat_percentage_calc)
         user_data = {"Age": 200, "Sex": "Unknown", "Weight": 2500, "Height": 1000}

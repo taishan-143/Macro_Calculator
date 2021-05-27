@@ -67,7 +67,7 @@ class TestMethods(unittest.TestCase):
     # def test_data_table(self):
     #     pass
         
-    @patch("builtins.open", new_callable=mock_open, read_data="data")
+    @patch("builtins.open", new_callable=mock_open, read_data="data") # potentially pointless
     def test_read_file(self, mock_file):
         assert open("path/to/file").read() == "data"
         mock_file.assert_called_with("path/to/file")
@@ -119,10 +119,15 @@ class TestMethods(unittest.TestCase):
 
     # def test_app_initialisation(self):
     #     pass
+    
+    def test_view_user_information(self):
+        database = {"Joe Bloggs": {"Age": 21, "Sex": "Male", "Weight": 95, "Height": 180, "Body Fat Percentage": 18, "Maintenance Calories": 2250}}
+        user = "Joe Bloggs"
+        expected = ["Age: 21 years", "Sex: Male", "Weight: 95kg", "Height: 180m", "Body Fat Percentage: 18%", "Maintenance Calories: 2250 calories"]
 
-    # def test_view_user_information(self):
-    #     pass
+        actual = view_user_information(database, user)
 
+        self.assertEqual(expected, actual)
 
 if __name__ == "__main__":
     unittest.main()
