@@ -1,0 +1,10 @@
+{
+  "John Doe": {
+    "Age": 25,
+    "Sex": "Male",
+    "Weight": 100,
+    "Height": 189.0,
+    "Body Fat Percentage": 20,
+    "Maintenance Calories": 2750
+  }
+}
