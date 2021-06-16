@@ -1,7 +1,7 @@
 import time
 import os
 
-import src.main.classes
+from src.main.classes import person, persistence
 
 # Clears the screen
 def clear():
@@ -18,7 +18,7 @@ def user_data(database, name):
     return database[name]
     # returns '{Age: value, Sex: value, Weight: value, Height: value}'
 
-# Table width function 
+# Table width function -> handle edge cases i.e. no input 
 def table_width(header, data):
     biggest = len(header)
     if data == []:
@@ -75,11 +75,14 @@ def choose_user(list_of_names):
     # show names in a table
     table("USERS", list_of_names)
     # take input from the user
-    option = int(input(f"Which person would you like to select? (1 - {len(list_of_names)}): "))
-    # from that input, return the desired name
-    for index, name in enumerate(list_of_names, 1):
-        if option == index:
-            return name 
+    try:
+        option = int(input(f"Which person would you like to select? (1 - {len(list_of_names)}): "))
+        # from that input, return the desired name
+        for index, name in enumerate(list_of_names, 1):
+            if option == index:
+                return name 
+    except ValueError as v:
+        print("That choice makes no sense to me!")
 
 # The user decides if they wish to view the menu
 def view_another_page(message):  
@@ -101,24 +104,24 @@ def view_another_page(message):
 # Prompts the user to input personal information
 def personal_information(database):
 
-    # instantiate person class
+    # instantiate person and persistence classes
     while True:
-        person = Person()
-        persistence = Persistence()
+        person_inst = person.Person()
+        persistence_inst = persistence.Persistence()
 
-        personal_info_menu()
+        person.personal_info_menu()
 
-        name = person.input_name()
+        name = person_inst.input_name()
         database[name] = {}
 
-        age = person.input_age()
-        persistence.save_data(database, "src/main/data/app_data.json", name, "Age", age)
-        sex = person.input_sex()
-        persistence.save_data(database, "src/main/data/app_data.json", name, "Sex", sex)
-        weight = person.input_weight()
-        persistence.save_data(database, "src/main/data/app_data.json", name, "Weight", weight)
-        height = person.input_height()
-        persistence.save_data(database, "src/main/data/app_data.json", name, "Height", height)
+        age = person_inst.input_age()
+        persistence_inst.save_data(database, "src/main/data/app_data.json", name, "Age", age)
+        sex = person_inst.input_sex()
+        persistence_inst.save_data(database, "src/main/data/app_data.json", name, "Sex", sex)
+        weight = person_inst.input_weight()
+        persistence_inst.save_data(database, "src/main/data/app_data.json", name, "Weight", weight)
+        height = person_inst.input_height()
+        persistence_inst.save_data(database, "src/main/data/app_data.json", name, "Height", height)
          
         if not view_another_page("\nWould you like to enter more details, Y or N?: "):
             print("Thanks, now calculate those macro's!")
@@ -126,7 +129,7 @@ def personal_information(database):
             clear()
             break 
 
-# The loading screen for the app start
+# The loading screen for the app start -> how do I test this???
 def app_initialisation(title_path):
     clear()
     print("initialising app .")
@@ -150,8 +153,15 @@ def view_user_information(database, user):
     sex = database[user]["Sex"]
     weight = database[user]["Weight"]
     height = database[user]["Height"]
-    body_fat = database[user]["Body Fat Percentage"]
-    maintenance = database[user]["Maintenance Calories"]
+    # potentially handle this better.
+    if "Body Fat Percentage" in database[user]:
+        body_fat = database[user]["Body Fat Percentage"]
+    else: 
+        body_fat = 0
+    if "Maintenance Calories" in database[user]:
+        maintenance = database[user]["Maintenance Calories"]
+    else:
+        maintenance = 0
 
     age_line = f"Age: {age} years"
     sex_line = f"Sex: {sex}"
@@ -161,5 +171,5 @@ def view_user_information(database, user):
     maintenance_line = f"Maintenance Calories: {maintenance} calories"
 
     personal_data = [age_line, sex_line, weight_line, height_line, body_fat_line, maintenance_line]
-    data_table(f"{user}'s Information", personal_data)
-    
+    return personal_data
+        

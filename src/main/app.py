@@ -2,12 +2,9 @@ import time
 
 from src.main.classes.persistence import *
 import src.main.functions.methods as methods
-from src.main.functions.body_fat_percentage_calc import body_fat_percentage_new_calc
+from src.main.functions.body_fat_percentage_calc import body_fat_percentage_calc
 from src.main.functions.maintenance_calories import maintenance_calories
-from src.main.functions.macronutrients import new_caloric_intake, macronutrient_ratios
-
-
-
+from src.main.functions.macronutrients import new_caloric_intake, macronutrient_ratios, display_macro_ratios
 
 def menu():
     print(""" 
@@ -59,7 +56,7 @@ def start():
                     # return that users data
                     specific_user_data = methods.user_data(database, specific_person)
                     # run body_fat_percent_calc on  user
-                    body_fat_percentage = body_fat_percentage_new_calc(specific_user_data)
+                    body_fat_percentage = body_fat_percentage_calc(specific_user_data)
                     print(f"\nYour body fat percentage is {body_fat_percentage:.2f}%")
                     persistence.save_data(database, "src/main/data/app_data.json", specific_person, "Body Fat Percentage", body_fat_percentage)
                     view_menu = False
@@ -82,16 +79,18 @@ def start():
                     maintenance_cals = database[specific_person]["Maintenance Calories"]
                     # calculate their macros
                     preference = input("Are you bulking, or cutting?: ")
-                    NCI = new_caloric_intake(preference, maintenance_cals) # MAKE MAINTENANCE CALS AND BODY FAT GLOBAL VARIABLES. 
-                    preferred_macro_ratios = macronutrient_ratios(NCI)
-                    print(preferred_macro_ratios)
+                    New_Caloric_Intake = new_caloric_intake(preference, maintenance_cals)  
+                    preferred_macro_ratios = macronutrient_ratios(New_Caloric_Intake)
+                    show_ratios = display_macro_ratios(preferred_macro_ratios)
+                    print(show_ratios)
                     view_menu = False
                 elif option == 4:
                     methods.clear()
                     # grab a user
                     specific_person = methods.choose_user(names)
                     # show their data
-                    methods.view_user_information(database, specific_person)
+                    person_data = methods.view_user_information(database, specific_person)
+                    methods.data_table(f"{specific_person}'s Information", person_data)
                     view_menu = False
                 elif option == 5:
                     methods.clear()

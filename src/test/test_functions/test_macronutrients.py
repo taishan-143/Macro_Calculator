@@ -35,8 +35,16 @@ class TestMacronutrients(unittest.TestCase):
         actual = fat_choice(protein)
 
         self.assertEqual(expected, actual)
-        
 
+    @patch("builtins.input")
+    def test_macronutrient_ratios(self, mock_input):
+        new_caloric_intake = 1500
+        mock_input.side_effect = [30, 30]
+        expected = {112.5: 30, 50: 30, 150: 40}
+
+        actual = macronutrient_ratios(new_caloric_intake)
+
+        self.assertEqual(expected, actual)
 
 
 if __name__ == "__main__":
