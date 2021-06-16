@@ -11,11 +11,13 @@ activity = """How active are you?
 
 # weight in kg, height in cm 
 
+## HANDLE CHAR INPUTS! ##
+
 def male_REE(weight, height, age):
-    return (10 * weight) + (6.25 * height) - (5 * age) + 5
+    return float((10 * weight) + (6.25 * height) - (5 * age) + 5)
 
 def female_REE(weight, height, age):
-    return (10 * weight) + (6.25 * height) - (5 * age) - 161
+    return float((10 * weight) + (6.25 * height) - (5 * age) - 161)
 
 def calculate_REE(sex, weight, height, age):
     if sex[0].lower() == 'm':

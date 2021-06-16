@@ -9,10 +9,11 @@
 
 def new_caloric_intake(preference, maintenance_calories):
     
-    if preference == 'bulking':
-        word = 'bulk'
+    # make this better
+    if preference == "bulking":
+        word = "bulk"
     else:
-        word = 'cut'
+        word = "cut"
 
     not_calculated_new_intake = True
     while not_calculated_new_intake:
@@ -22,12 +23,16 @@ def new_caloric_intake(preference, maintenance_calories):
                 print("Your choice is out of range, try again")
                 not_calculated_new_intake = True
             else:
-                new_calorie_intake = maintenance_calories * (1 - percentage/100)
+                if word == "bulk":
+                    new_calorie_intake = maintenance_calories * (1 + percentage/100)
+                elif word == "cut":
+                    new_calorie_intake = maintenance_calories * (1 - percentage/100)
+                else:
+                    raise ValueError
                 return new_calorie_intake
                 not_calculated_new_intake = False
         except ValueError as v:
             print("\nThat isn't a number, try again.")
-
 
 # Choice for percentage of protein intake
 def protein_choice():
@@ -46,7 +51,7 @@ def fat_choice(protein):
     not_chosen_fat_percentage = True
     while not_chosen_fat_percentage:
         fat = int(input("What percentage of fat do you want? (0 - 100): "))
-        if fat <= 0 or fat > (100 - protein):
+        if fat < 0 or fat >= (100 - protein):
             print("\nYou're out of range, try again.")
             not_chosen_fat_percentage = True
         else:
@@ -55,6 +60,7 @@ def fat_choice(protein):
             
 
 # Final calculation of macronutrients.
+# break down into returning values, and a print statement.
 def macronutrient_ratios(new_caloric_intake):
     not_chosen_macro_preferences = True
     while not_chosen_macro_preferences:
@@ -72,14 +78,19 @@ def macronutrient_ratios(new_caloric_intake):
             fat_in_grams = fat_cals / 9 # 9 cals of fat per gram
             carbs_in_grams = carb_cals / 4 # 4 cals of carbs per gram
 
-            return f"""\nDaily macronutrients based on your dietary preference:
-        Protein: {protein_in_grams:.2f}g ({protein}%)
-        Fat: {fat_in_grams:.2f}g ({fat}%)
-        Carbohydrates: {carbs_in_grams:.2f}g ({carbs}%)
-            """
+            return {protein_in_grams: protein, fat_in_grams: fat, carbs_in_grams: carbs}
         except ValueError as v:
             print("\nThat isn't a number, try again.")
 
+def display_macro_ratios(macro_ratios):
+    # get keys from dictionary
+    macros_in_grams = list(macro_ratios.keys())
+    return f"""\nDaily macronutrients based on your dietary preference
+        Protein: {macros_in_grams[0]:.2f}g ({macro_ratios[macros_in_grams[0]]}%)
+        Fat: {macros_in_grams[1]:.2f}g ({macro_ratios[macros_in_grams[1]]}%)
+        Carbohydrates: {macros_in_grams[2]:.2f}g ({macro_ratios[macros_in_grams[2]]}%)
+            """
 
+        # insert new caloric targer as well!
 
 

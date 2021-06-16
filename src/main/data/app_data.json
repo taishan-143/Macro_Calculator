@@ -4,7 +4,7 @@
     "Sex": "male",
     "Weight": 104.0,
     "Height": 189.0,
-    "Body Fat Percentage": 27.37,
+    "Body Fat Percentage": 27.73,
     "Maintenance Calories": 2889.22
   },
   "Jack Palmer": {
@@ -17,6 +17,8 @@
     "Age": 28,
     "Sex": "male",
     "Weight": 90.0,
-    "Height": 175.0
+    "Height": 175.0,
+    "Maintenance Calories": 2555.78,
+    "Body Fat Percentage": 13.84
   }
 }

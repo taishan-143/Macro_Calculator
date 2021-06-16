@@ -26,8 +26,8 @@ class Person:
                 # Acquire the age
                 self.age = int(input("How old are you?: "))
                 # Check the age isn't less than zero -> impossible.
-                if self.age < 0:
-                    print("You can't be negative years old, can you?")
+                if self.age <= 0:
+                    print("You must have an age, surely?")
                     not_acquired_age = True
                 else:
                     # Exit loop and return the age
@@ -92,7 +92,6 @@ class Person:
             except ValueError as v:
                 print("You have entered an invalid height, try again.")
                 not_acquired_height = True
-
 
 def personal_info_menu():
     print("""
