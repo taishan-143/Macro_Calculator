@@ -1,21 +1,24 @@
 import time
 import os
 
-from src.main.classes import person, persistence
+from src.main.classes import person
+from src.main.database import database
+from src.main.database import database
 
 # Clears the screen
 def clear():
     # clears the screen
     os.system("clear")
 
-# Function to read through json file, grab names and append to a list -> potentially edit json file to support dictionary indexing.
-def create_register(database):
-    return list(database.keys())
-    # returns '[name1, name2, name3]'
-
 # Function which takes a name, and returns the appropriate data 
-def user_data(database, name):
-    return database[name]
+def user_data(name):
+    data = database.Data_Persistence()
+    age = data.load_data_from_database("age", "name", name)
+    sex = data.load_data_from_database("sex", "name", name)
+    weight = data.load_data_from_database("weight", "name", name)
+    height = data.load_data_from_database("height", "name", name)
+
+    return {"Age": age, "Sex": sex, "Weight": weight, "Height": height}
     # returns '{Age: value, Sex: value, Weight: value, Height: value}'
 
 # Table width function -> handle edge cases i.e. no input 
@@ -102,26 +105,24 @@ def view_another_page(message):
             print("\nI dont understand.") 
 
 # Prompts the user to input personal information
-def personal_information(database):
+def personal_information():
 
     # instantiate person and persistence classes
     while True:
         person_inst = person.Person()
-        persistence_inst = persistence.Persistence()
+        persistence = database.Data_Persistence()
 
         person.personal_info_menu()
 
         name = person_inst.input_name()
-        database[name] = {}
-
         age = person_inst.input_age()
-        persistence_inst.save_data(database, "src/main/data/app_data.json", name, "Age", age)
         sex = person_inst.input_sex()
-        persistence_inst.save_data(database, "src/main/data/app_data.json", name, "Sex", sex)
         weight = person_inst.input_weight()
-        persistence_inst.save_data(database, "src/main/data/app_data.json", name, "Weight", weight)
         height = person_inst.input_height()
-        persistence_inst.save_data(database, "src/main/data/app_data.json", name, "Height", height)
+
+        data = [name, age, sex, weight, height]
+
+        persistence.save_user_to_database(data)
          
         if not view_another_page("\nWould you like to enter more details, Y or N?: "):
             print("Thanks, now calculate those macro's!")

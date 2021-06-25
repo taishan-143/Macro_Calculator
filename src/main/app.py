@@ -1,6 +1,6 @@
 import time
 
-from src.main.classes.persistence import *
+from src.main.database import database
 import src.main.functions.methods as methods
 from src.main.functions.body_fat_percentage_calc import body_fat_percentage_calc
 from src.main.functions.maintenance_calories import maintenance_calories
@@ -26,17 +26,17 @@ def menu():
     """)
 
 def start():
-    methods.app_initialisation("src/main/extras/titlepage.txt")
+    # methods.app_initialisation("src/main/extras/titlepage.txt")
     while True:
         methods.clear()
 
         menu()
         
-        persistence = Persistence()
-        database = persistence.load_data("src/main/data/app_data.json")
-
+        persistence = database.Data_Persistence()
+    
         # create a register of names
-        names = methods.create_register(database)
+        register = persistence.create_register()
+
 
         view_menu = True
         while view_menu:
@@ -45,25 +45,26 @@ def start():
 
                 if option == 0:
                     methods.clear()
-                    methods.personal_information(database)
+                    methods.personal_information()
                     view_menu = False
                     # stick menu in without asking to view it here 
                 elif option == 1:
                     methods.clear()
                     methods.read_file("src/main/extras/body_fat_percentage_instructions.txt")
                     # grab a specific user from the list of names
-                    specific_person = methods.choose_user(names)
+                    specific_person = methods.choose_user(register)
                     # return that users data
-                    specific_user_data = methods.user_data(database, specific_person)
+                    specific_user_data = methods.user_data(specific_person)
+                    print(specific_user_data)
                     # run body_fat_percent_calc on  user
                     body_fat_percentage = body_fat_percentage_calc(specific_user_data)
                     print(f"\nYour body fat percentage is {body_fat_percentage:.2f}%")
-                    persistence.save_data(database, "src/main/data/app_data.json", specific_person, "Body Fat Percentage", body_fat_percentage)
+                    persistence.update_value_in_database("body_fat_percentage", body_fat_percentage, "name", specific_person)
                     view_menu = False
                 elif option == 2:
                     methods.clear()
                     # grab a specific user from the list of names
-                    specific_person = methods.choose_user(names)
+                    specific_person = methods.choose_user(register)
                     # return that users data
                     specific_user_data = methods.user_data(database, specific_person)
                     # calculate that users maintenance calories
@@ -74,7 +75,7 @@ def start():
                 elif option == 3:
                     methods.clear()
                     # grab a user
-                    specific_person = methods.choose_user(names)
+                    specific_person = methods.choose_user(register)
                     # get their maintenance calories
                     maintenance_cals = database[specific_person]["Maintenance Calories"]
                     # calculate their macros
@@ -87,7 +88,7 @@ def start():
                 elif option == 4:
                     methods.clear()
                     # grab a user
-                    specific_person = methods.choose_user(names)
+                    specific_person = methods.choose_user(register)
                     # show their data
                     person_data = methods.view_user_information(database, specific_person)
                     methods.data_table(f"{specific_person}'s Information", person_data)
