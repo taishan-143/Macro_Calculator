@@ -3,7 +3,7 @@ import os
 
 from src.main.classes import person
 from src.main.database import database
-from src.main.database import database
+
 
 # Clears the screen
 def clear():
@@ -149,27 +149,21 @@ def app_initialisation(title_path):
     clear()
 
 # View the users information
-def view_user_information(database, user):
-    age = database[user]["Age"]
-    sex = database[user]["Sex"]
-    weight = database[user]["Weight"]
-    height = database[user]["Height"]
-    # potentially handle this better.
-    if "Body Fat Percentage" in database[user]:
-        body_fat = database[user]["Body Fat Percentage"]
-    else: 
-        body_fat = 0
-    if "Maintenance Calories" in database[user]:
-        maintenance = database[user]["Maintenance Calories"]
-    else:
-        maintenance = 0
+def view_user_information(user):
+    dbase = database.Data_Persistence()
+    age = dbase.load_data_from_database("age", "name", user)
+    sex = dbase.load_data_from_database("sex", "name", user)
+    weight = dbase.load_data_from_database("weight", "name", user)
+    height = dbase.load_data_from_database("height", "name", user)
+    body_fat = dbase.load_data_from_database("body_fat_percentage", "name", user)
+    maintenance_calories = dbase.load_data_from_database("maintenance_calories", "name", user)
 
     age_line = f"Age: {age} years"
     sex_line = f"Sex: {sex}"
     weight_line = f"Weight: {weight}kg"
     height_line = f"Height: {height}m"
     body_fat_line = f"Body Fat Percentage: {body_fat}%"
-    maintenance_line = f"Maintenance Calories: {maintenance} calories"
+    maintenance_line = f"Maintenance Calories: {maintenance_calories} calories"
 
     personal_data = [age_line, sex_line, weight_line, height_line, body_fat_line, maintenance_line]
     return personal_data
