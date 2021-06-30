@@ -82,10 +82,12 @@ def macronutrient_ratios(new_caloric_intake):
         except ValueError as v:
             print("\nThat isn't a number, try again.")
 
-def display_macro_ratios(macro_ratios):
+def display_macro_ratios(macro_ratios, new_caloric_intake):
     # get keys from dictionary
     macros_in_grams = list(macro_ratios.keys())
-    return f"""\nDaily macronutrients based on your dietary preference
+    return f"""\nDaily macronutrients based on your dietary preference:-
+    
+        New Daily Caloric Intake: {new_caloric_intake} calories
         Protein: {macros_in_grams[0]:.2f}g ({macro_ratios[macros_in_grams[0]]}%)
         Fat: {macros_in_grams[1]:.2f}g ({macro_ratios[macros_in_grams[1]]}%)
         Carbohydrates: {macros_in_grams[2]:.2f}g ({macro_ratios[macros_in_grams[2]]}%)

@@ -29,15 +29,17 @@ class Data_Persistence:
     def load_data_from_database(self, data_type, target_data_type, target_data_value):
         try:
             connection = database_connection()
-            cursor = connection.cursor()
-            cursor.execute("SELECT "f"{data_type}"" FROM User WHERE "f"{target_data_type}"" = %s", target_data_value)
+            cursor = connection.cursor(buffered=True)
+            cursor.execute("SELECT "f"{data_type}"" FROM User WHERE "f"{target_data_type}"" = %s", (target_data_value, ))
             connection.commit()
+            data = cursor.fetchall()
             cursor.close()
         except Exception as e:
             print("\nFailure loading data from the database: ")
             print(e)
         finally:
             connection.close() 
+            return data[0][0]
 
     def remove_user_from_database(self, users_name):
         try:
@@ -86,6 +88,3 @@ class Data_Persistence:
             names.append(person[0])
         return names
 
-
-dp = Data_Persistence()
-test = dp.load_data_from_database("age", "name", "T dog")

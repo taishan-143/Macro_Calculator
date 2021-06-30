@@ -66,23 +66,23 @@ def start():
                     # grab a specific user from the list of names
                     specific_person = methods.choose_user(register)
                     # return that users data
-                    specific_user_data = methods.user_data(database, specific_person)
+                    specific_user_data = methods.user_data(specific_person)
                     # calculate that users maintenance calories
                     maintenance_cals = maintenance_calories(specific_user_data)
                     print(f"Your maintenance calories are: {maintenance_cals:.2f} calories")
-                    persistence.save_data(database, "src/main/data/app_data.json", specific_person, "Maintenance Calories", maintenance_cals)
+                    persistence.update_value_in_database("maintenance_calories", maintenance_cals, "name", specific_person)
                     view_menu = False
                 elif option == 3:
                     methods.clear()
                     # grab a user
                     specific_person = methods.choose_user(register)
                     # get their maintenance calories
-                    maintenance_cals = database[specific_person]["Maintenance Calories"]
+                    maintenance_cals = persistence.load_data_from_database("maintenance_calories", "name", specific_person)
                     # calculate their macros
                     preference = input("Are you bulking, or cutting?: ")
                     New_Caloric_Intake = new_caloric_intake(preference, maintenance_cals)  
                     preferred_macro_ratios = macronutrient_ratios(New_Caloric_Intake)
-                    show_ratios = display_macro_ratios(preferred_macro_ratios)
+                    show_ratios = display_macro_ratios(preferred_macro_ratios, New_Caloric_Intake)
                     print(show_ratios)
                     view_menu = False
                 elif option == 4:
@@ -90,7 +90,7 @@ def start():
                     # grab a user
                     specific_person = methods.choose_user(register)
                     # show their data
-                    person_data = methods.view_user_information(database, specific_person)
+                    person_data = methods.view_user_information(specific_person)
                     methods.data_table(f"{specific_person}'s Information", person_data)
                     view_menu = False
                 elif option == 5:
